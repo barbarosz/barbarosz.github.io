@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Barbaros Zorlu — AI/ML researcher and software engineer at Virginia Tech. Generative AI research, LLM systems, scalable backend engineering, and production ML."
+  />
+  <meta name="theme-color" content="#09090b" />
+  <meta property="og:title" content="Barbaros Zorlu — AI/ML Researcher & Software Engineer" />
+  <meta
+    property="og:description"
+    content="Building scalable infrastructure and advancing generative AI."
+  />
+  <meta property="og:type" content="website" />
+  <title>Barbaros Zorlu — AI/ML Researcher & Software Engineer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#09090b",
+            surface: "#0d0d10",
+            panel: "#111116",
+            line: "#23232b",
+            cyan: "#67e8f9",
+            violet: "#a78bfa",
+            lime: "#bef264",
+            orange: "#fb923c"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          },
+          maxWidth: {
+            shell: "1180px"
+          },
+          boxShadow: {
+            soft: "0 24px 80px rgba(0,0,0,.28)",
+            cyan: "0 0 0 1px rgba(103,232,249,.13), 0 18px 80px rgba(34,211,238,.07)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --mx: 50vw;
+      --my: 30vh;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 88px; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(850px circle at var(--mx) var(--my), rgba(103,232,249,.055), transparent 42%),
+        radial-gradient(700px circle at 92% 12%, rgba(167,139,250,.075), transparent 40%),
+        #09090b;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.021) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.021) 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), transparent 86%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), transparent 86%);
+    }
+
+    ::selection { background: rgba(103,232,249,.24); color: white; }
+    a, button { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      opacity: .025;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.014));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .hairline {
+      position: relative;
+    }
+
+    .hairline::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(145deg, rgba(255,255,255,.13), rgba(255,255,255,.025) 42%, rgba(103,232,249,.1));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .gradient-text {
+      background: linear-gradient(105deg, #fff 0%, #fafafa 42%, #a5f3fc 72%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      color: #a1a1aa;
+      font-family: "JetBrains Mono", monospace;
+      font-size: .72rem;
+      line-height: 1;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 26px;
+      height: 1px;
+      background: linear-gradient(90deg, #67e8f9, transparent);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity .72s cubic-bezier(.22,1,.36,1),
+        transform .72s cubic-bezier(.22,1,.36,1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tilt {
+      transition:
+        transform .28s cubic-bezier(.22,1,.36,1),
+        border-color .28s ease,
+        background .28s ease,
+        box-shadow .28s ease;
+    }
+
+    .tilt:hover {
+      transform: translateY(-5px);
+      border-color: rgba(103,232,249,.25);
+      box-shadow: 0 20px 70px rgba(0,0,0,.3);
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color .18s ease;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: -7px;
+      height: 1px;
+      background: #67e8f9;
+      transition: right .22s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      right: 0;
+    }
+
+    .nav-link.active { color: white; }
+
+    .logo-chip img {
+      width: 19px;
+      height: 19px;
+      object-fit: contain;
+      opacity: .9;
+    }
+
+    .stack-icon img {
+      width: 17px;
+      height: 17px;
+      object-fit: contain;
+      opacity: .82;
+    }
+
+    .marquee-mask {
+      mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+
+    .marquee-track {
+      animation: marquee 28s linear infinite;
+      width: max-content;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .pulse-dot {
+      box-shadow: 0 0 0 0 rgba(190,242,100,.32);
+      animation: pulse 2.5s ease-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(190,242,100,.32); }
+      70% { box-shadow: 0 0 0 9px rgba(190,242,100,0); }
+      100% { box-shadow: 0 0 0 0 rgba(190,242,100,0); }
+    }
+
+    .metric-number {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -.04em;
+    }
+
+    .publication-glow::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -80px;
+      top: -90px;
+      border-radius: 9999px;
+      background: rgba(103,232,249,.08);
+      filter: blur(58px);
+      pointer-events: none;
+    }
+
+    .vt-mark {
+      display: inline-grid;
+      place-items: center;
+      min-width: 36px;
+      height: 28px;
+      padding: 0 7px;
+      border-radius: 8px;
+      background: #861F41;
+      color: #E87722;
+      font-weight: 900;
+      font-style: italic;
+      font-size: .75rem;
+      letter-spacing: -.05em;
+    }
+
+    .ms-mark {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .ms-mark span:nth-child(1) { background:#f25022; }
+    .ms-mark span:nth-child(2) { background:#7fba00; }
+    .ms-mark span:nth-child(3) { background:#00a4ef; }
+    .ms-mark span:nth-child(4) { background:#ffb900; }
+
+    #scroll-progress {
+      transform-origin: left center;
+      transform: scaleX(0);
+    }
+
+    .kbd {
+      border: 1px solid rgba(255,255,255,.13);
+      border-bottom-color: rgba(255,255,255,.2);
+      background: rgba(255,255,255,.045);
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,.07);
+    }
+
+    #command-palette[aria-hidden="false"] {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #command-palette[aria-hidden="false"] .palette-card {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .palette-card {
+      opacity: 0;
+      transform: translateY(-10px) scale(.985);
+      transition: .18s ease;
+    }
+
+    @media (max-width: 767px) {
+      .marquee-track { animation-duration: 22s; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .tilt, .nav-link::after, .palette-card { transition: none; }
+      .marquee-track, .pulse-dot { animation: none; }
+    }
+  </style>
+</head>
+
+<body class="font-sans text-zinc-100 antialiased">
+  <div class="noise"></div>
+  <div
+    id="scroll-progress"
+    class="fixed inset-x-0 top-0 z-[70] h-px bg-gradient-to-r from-cyan via-violet to-cyan"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Navigation -->
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/[0.055] bg-ink/75 backdrop-blur-xl">
+    <nav class="mx-auto flex h-[68px] max-w-shell items-center justify-between px-5 sm:px-7 lg:px-8" aria-label="Primary navigation">
+      <a href="#top" class="group flex items-center gap-2.5" aria-label="Barbaros Zorlu home">
+        <span class="grid h-8 w-8 place-items-center rounded-xl border border-white/10 bg-white/[0.035] font-mono text-xs font-semibold tracking-tight text-white transition group-hover:border-cyan/30">
+          BZ
+        </span>
+        <span class="hidden text-sm font-semibold tracking-[-0.02em] text-zinc-200 sm:block">Barbaros Zorlu</span>
+      </a>
+
+      <div class="hidden items-center gap-7 text-[13px] font-medium text-zinc-500 md:flex">
+        <a class="nav-link" href="#work">Work</a>
+        <a class="nav-link" href="#research">Research</a>
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#about">About</a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button
+          id="command-button"
+          type="button"
+          class="hidden items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 font-mono text-[11px] text-zinc-500 transition hover:border-white/20 hover:text-zinc-300 sm:flex"
+          aria-label="Open quick navigation"
+        >
+          Navigate
+          <span class="kbd rounded-md px-1.5 py-0.5 text-[9px] text-zinc-500">⌘K</span>
+        </button>
+        <a
+          href="mailto:barbaroszorluchi@gmail.com"
+          class="rounded-xl border border-white/10 bg-white px-3.5 py-2 text-xs font-semibold text-black transition hover:bg-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan/70"
+        >
+          Contact
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top" class="relative z-10">
+    <!-- Hero -->
+    <section class="mx-auto min-h-screen max-w-shell px-5 pb-20 pt-32 sm:px-7 sm:pt-40 lg:px-8">
+      <div class="grid min-h-[72vh] items-center gap-12 lg:grid-cols-[1.2fr_.8fr] lg:gap-14">
+        <div>
+          <div class="mb-7 flex flex-wrap items-center gap-3">
+            <span class="inline-flex items-center gap-2 rounded-full border border-lime/15 bg-lime/[0.055] px-3 py-1.5 font-mono text-[11px] text-lime">
+              <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-lime"></span>
+              Virginia Tech · Computer Science
+            </span>
+            <span class="rounded-full border border-white/10 bg-white/[0.025] px-3 py-1.5 font-mono text-[11px] text-zinc-500">
+              AI/ML Research × Software Systems
+            </span>
+          </div>
+
+          <h1 class="gradient-text max-w-5xl text-[clamp(3.35rem,8vw,7.2rem)] font-extrabold leading-[.88] tracking-[-.065em]">
+            Barbaros<br />Zorlu
+          </h1>
+
+          <p class="mt-8 max-w-3xl text-[clamp(1.4rem,3vw,2.35rem)] font-semibold leading-[1.12] tracking-[-.035em] text-zinc-100">
+            Building scalable infrastructure and advancing generative AI.
+          </p>
+
+          <p class="mt-6 max-w-2xl text-[15px] leading-7 text-zinc-400 sm:text-base">
+            Senior Computer Science student at Virginia Tech bridging rigorous machine learning research with production-grade software engineering—from generative video and LLM evaluation to mobile and backend systems.
+          </p>
+
+          <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="#work"
+              class="group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan/70"
+            >
+              Explore selected work
+              <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a
+              href="resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-zinc-200 transition hover:border-white/20 hover:bg-white/[0.055] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan/70"
+            >
+              Resume
+              <svg class="h-4 w-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M12 4v12m0 0 4-4m-4 4-4-4M5 20h14" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="mt-12 flex flex-wrap items-center gap-x-7 gap-y-4 text-xs text-zinc-500">
+            <a href="https://github.com/barbarosz" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 transition hover:text-white">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.596 2 12.267c0 4.537 2.865 8.386 6.839 9.745.5.095.682-.223.682-.494 0-.244-.009-.89-.014-1.746-2.782.621-3.369-1.375-3.369-1.375-.455-1.188-1.11-1.504-1.11-1.504-.908-.638.069-.625.069-.625 1.003.073 1.531 1.058 1.531 1.058.892 1.568 2.341 1.115 2.91.852.091-.664.349-1.115.635-1.371-2.221-.26-4.555-1.141-4.555-5.076 0-1.121.39-2.037 1.029-2.754-.103-.26-.446-1.304.098-2.718 0 0 .84-.276 2.75 1.052A9.326 9.326 0 0 1 12 6.966a9.32 9.32 0 0 1 2.504.346c1.909-1.328 2.748-1.052 2.748-1.052.546 1.414.203 2.458.1 2.718.64.717 1.027 1.633 1.027 2.754 0 3.945-2.338 4.813-4.566 5.068.359.317.679.944.679 1.903 0 1.374-.012 2.482-.012 2.82 0 .274.18.594.688.493C19.138 20.65 22 16.803 22 12.267 22 6.596 17.523 2 12 2Z" clip-rule="evenodd"/>
+              </svg>
+              github.com/barbarosz
+            </a>
+            <a href="https://www.linkedin.com/in/barbaros-zorlu" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 transition hover:text-white">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.96 1.96 0 1 0 5.25 6.92 1.96 1.96 0 0 0 5.25 3ZM20.44 13.4c0-3.46-1.85-5.07-4.32-5.07-1.99 0-2.88 1.09-3.38 1.86V8.5H9.36V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.85 1.71 1.85 3.05V20h3.38l.33-6.6Z"/>
+              </svg>
+              LinkedIn
+            </a>
+            <a href="mailto:barbaroszorluchi@gmail.com" class="inline-flex items-center gap-2 transition hover:text-white">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M4 6.75h16v10.5H4z" stroke-linejoin="round"/>
+                <path d="m5 7.5 7 5.3 7-5.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Email
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero systems panel -->
+        <aside class="reveal">
+          <div class="hairline glass overflow-hidden rounded-[26px] border border-white/[0.055] shadow-soft">
+            <div class="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
+              <div class="flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-[.14em] text-zinc-600">current_state.json</span>
+            </div>
+
+            <div class="space-y-5 p-5 sm:p-6">
+              <div>
+                <p class="font-mono text-[10px] uppercase tracking-[.16em] text-zinc-600">Research</p>
+                <div class="mt-2.5 flex items-start gap-3">
+                  <div class="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-violet/15 bg-violet/[0.07] text-sm">◆</div>
+                  <div>
+                    <p class="text-sm font-semibold text-zinc-100">GEMLAB · Virginia Tech</p>
+                    <p class="mt-1 text-xs leading-5 text-zinc-500">Generative video systems · advised by Prof. Pınar Yanardağ</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="h-px bg-white/[0.06]"></div>
+
+              <div>
+                <p class="font-mono text-[10px] uppercase tracking-[.16em] text-zinc-600">Publication</p>
+                <div class="mt-2.5 flex items-start gap-3">
+                  <div class="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-cyan/15 bg-cyan/[0.06] font-mono text-[10px] font-semibold text-cyan">N26</div>
+                  <div>
+                    <p class="text-sm font-semibold text-zinc-100">JudgeJack</p>
+                    <p class="mt-1 text-xs leading-5 text-zinc-500">Accepted · NeurIPS 2026 Verify-Agents Workshop</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="h-px bg-white/[0.06]"></div>
+
+              <div>
+                <p class="font-mono text-[10px] uppercase tracking-[.16em] text-zinc-600">Engineering</p>
+                <div class="mt-3 grid grid-cols-2 gap-2">
+                  <div class="rounded-2xl border border-white/[0.065] bg-black/20 p-3.5">
+                    <p class="metric-number text-2xl font-bold text-white">5K+</p>
+                    <p class="mt-1 text-[11px] leading-4 text-zinc-600">records / inference batch</p>
+                  </div>
+                  <div class="rounded-2xl border border-white/[0.065] bg-black/20 p-3.5">
+                    <p class="metric-number text-2xl font-bold text-white">40+</p>
+                    <p class="mt-1 text-[11px] leading-4 text-zinc-600">React Native screens standardized</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-1 font-mono text-[10px] text-zinc-600">
+                <span>status: <span class="text-lime">building</span></span>
+                <span>2026</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Brand proof strip -->
+      <div class="reveal mt-8 border-y border-white/[0.055] py-5">
+        <div class="flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
+          <p class="font-mono text-[10px] uppercase tracking-[.18em] text-zinc-600">Selected experience & research</p>
+
+          <div class="flex flex-wrap items-center gap-4 sm:gap-6">
+            <div class="logo-chip flex items-center gap-2 text-xs font-semibold text-zinc-400">
+              <span class="ms-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+              Microsoft
+            </div>
+            <div class="logo-chip flex items-center gap-2 text-xs font-semibold text-zinc-400">
+              <img src="https://cdn.simpleicons.org/google/ffffff" alt="" loading="lazy" />
+              Google
+            </div>
+            <div class="logo-chip flex items-center gap-2 text-xs font-semibold text-zinc-400">
+              <span class="vt-mark" aria-hidden="true">VT</span>
+              Virginia Tech
+            </div>
+            <div class="logo-chip flex items-center gap-2 text-xs font-semibold text-zinc-400">
+              <span class="grid h-7 min-w-7 place-items-center rounded-lg border border-white/10 bg-white/[0.035] px-1.5 font-mono text-[9px] text-zinc-300">NIPS</span>
+              NeurIPS
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="border-y border-white/[0.055] bg-white/[0.012]">
+      <div class="mx-auto grid max-w-shell grid-cols-2 divide-x divide-y divide-white/[0.055] px-5 sm:px-7 md:grid-cols-4 md:divide-y-0 lg:px-8">
+        <div class="reveal px-4 py-8 first:pl-0 md:px-6">
+          <p class="metric-number text-3xl font-bold text-white sm:text-4xl">21K+</p>
+          <p class="mt-2 text-xs leading-5 text-zinc-500">matched-pair examples in JudgeJack evaluation</p>
+        </div>
+        <div class="reveal px-4 py-8 md:px-6">
+          <p class="metric-number text-3xl font-bold text-white sm:text-4xl">40%</p>
+          <p class="mt-2 text-xs leading-5 text-zinc-500">reduction in manual analysis time at Google</p>
+        </div>
+        <div class="reveal px-4 py-8 md:px-6">
+          <p class="metric-number text-3xl font-bold text-white sm:text-4xl">100+</p>
+          <p class="mt-2 text-xs leading-5 text-zinc-500">ACM members led as chapter president</p>
+        </div>
+        <div class="reveal px-4 py-8 last:pr-0 md:px-6">
+          <p class="metric-number text-3xl font-bold text-white sm:text-4xl">2×</p>
+          <p class="mt-2 text-xs leading-5 text-zinc-500">National Triathlon Champion in Türkiye</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work -->
+    <section id="work" class="mx-auto max-w-shell px-5 py-28 sm:px-7 sm:py-32 lg:px-8">
+      <div class="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div class="max-w-3xl">
+          <p class="section-kicker">01 · Selected work</p>
+          <h2 class="mt-5 text-3xl font-bold tracking-[-.045em] text-white sm:text-5xl">
+            Production systems, not toy demos.
+          </h2>
+          <p class="mt-5 max-w-2xl text-sm leading-7 text-zinc-500 sm:text-base">
+            A track record across applied AI, ML infrastructure, product engineering, and research software.
+          </p>
+        </div>
+        <span class="font-mono text-[10px] uppercase tracking-[.14em] text-zinc-700">Chicago ↔ Blacksburg</span>
+      </div>
+
+      <div class="mt-14 grid gap-5">
+        <!-- Microsoft -->
+        <article class="reveal tilt hairline glass rounded-[26px] border border-white/[0.055] p-6 sm:p-8">
+          <div class="grid gap-7 md:grid-cols-[190px_1fr] md:gap-10">
+            <div>
+              <div class="flex items-center gap-3">
+                <span class="ms-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+                <span class="text-sm font-semibold text-white">Microsoft</span>
+              </div>
+              <p class="mt-4 font-mono text-[10px] uppercase tracking-[.13em] text-zinc-600">Jun 2026 — Aug 2026</p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h3 class="text-xl font-bold tracking-[-.025em] text-white sm:text-2xl">AI/ML Intern</h3>
+                <span class="rounded-full border border-cyan/15 bg-cyan/[0.05] px-2.5 py-1 font-mono text-[10px] text-cyan">Azure · Agents · Evaluation</span>
+              </div>
+              <p class="mt-4 max-w-3xl text-sm leading-7 text-zinc-400 sm:text-[15px]">
+                Architected autonomous LLM agent workflows and automated evaluation pipelines in Azure, focusing on reproducibility, system reliability, and end-to-end AI workflow design.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Uplifty -->
+        <article class="reveal tilt hairline glass rounded-[26px] border border-white/[0.055] p-6 sm:p-8">
+          <div class="grid gap-7 md:grid-cols-[190px_1fr] md:gap-10">
+            <div>
+              <div class="flex items-center gap-3">
+                <span class="grid h-[22px] w-[22px] place-items-center rounded-md border border-violet/20 bg-violet/[0.07] text-xs font-bold text-violet">U</span>
+                <span class="text-sm font-semibold text-white">Uplifty AI</span>
+              </div>
+              <p class="mt-4 font-mono text-[10px] uppercase tracking-[.13em] text-zinc-600">Jun 2026 — Aug 2026</p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h3 class="text-xl font-bold tracking-[-.025em] text-white sm:text-2xl">Full Stack Developer Intern</h3>
+                <span class="rounded-full border border-violet/15 bg-violet/[0.05] px-2.5 py-1 font-mono text-[10px] text-violet">React Native · Redis · PostgreSQL</span>
+              </div>
+              <div class="mt-4 grid gap-3 text-sm leading-6 text-zinc-400 md:grid-cols-2">
+                <p class="rounded-2xl border border-white/[0.055] bg-black/15 p-4">
+                  Engineered a decoupled two-layer caching system to mitigate production memory spikes and optimize asset resolution.
+                </p>
+                <p class="rounded-2xl border border-white/[0.055] bg-black/15 p-4">
+                  Standardized empty-state UI across <strong class="font-semibold text-zinc-200">40+ screens</strong> and shipped reusable, prop-driven React Native components.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Google -->
+        <article class="reveal tilt hairline glass rounded-[26px] border border-white/[0.055] p-6 sm:p-8">
+          <div class="grid gap-7 md:grid-cols-[190px_1fr] md:gap-10">
+            <div>
+              <div class="flex items-center gap-3">
+                <img class="h-[22px] w-[22px]" src="https://cdn.simpleicons.org/google/ffffff" alt="" loading="lazy" />
+                <span class="text-sm font-semibold text-white">Google</span>
+              </div>
+              <p class="mt-4 font-mono text-[10px] uppercase tracking-[.13em] text-zinc-600">Jul 2025 — Aug 2025</p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h3 class="text-xl font-bold tracking-[-.025em] text-white sm:text-2xl">Product Management Intern</h3>
+                <span class="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-[10px] text-zinc-400">Python · REST · SQL · ML</span>
+              </div>
+
+              <div class="mt-5 grid gap-3 sm:grid-cols-3">
+                <div class="rounded-2xl border border-white/[0.055] bg-black/15 p-4">
+                  <p class="metric-number text-2xl font-bold text-white">5K+</p>
+                  <p class="mt-1.5 text-[11px] leading-4 text-zinc-600">records processed per inference batch</p>
+                </div>
+                <div class="rounded-2xl border border-white/[0.055] bg-black/15 p-4">
+                  <p class="metric-number text-2xl font-bold text-white">40%</p>
+                  <p class="mt-1.5 text-[11px] leading-4 text-zinc-600">less manual analysis time</p>
+                </div>
+                <div class="rounded-2xl border border-white/[0.055] bg-black/15 p-4">
+                  <p class="metric-number text-2xl font-bold text-white">30%</p>
+                  <p class="mt-1.5 text-[11px] leading-4 text-zinc-600">fewer response errors</p>
+                </div>
+              </div>
+
+              <p class="mt-4 text-sm leading-7 text-zinc-400">
+                Built a containerized Python inference service, structured API schema, and validation pipeline to integrate ML inference into a tab-based product workflow.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Research engineering -->
+        <article class="reveal tilt hairline glass rounded-[26px] border border-white/[0.055] p-6 sm:p-8">
+          <div class="grid gap-7 md:grid-cols-[190px_1fr] md:gap-10">
+            <div>
+              <div class="flex items-center gap-3">
+                <span class="vt-mark" aria-hidden="true">VT</span>
+                <span class="text-sm font-semibold text-white">Virginia Tech CS</span>
+              </div>
+              <p class="mt-4 font-mono text-[10px] uppercase tracking-[.13em] text-zinc-600">Jan 2026 — May 2026</p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h3 class="text-xl font-bold tracking-[-.025em] text-white sm:text-2xl">LLM Systems Undergraduate Researcher</h3>
+                <span class="rounded-full border border-orange/15 bg-orange/[0.05] px-2.5 py-1 font-mono text-[10px] text-orange">Python · SQL · LLM pipelines</span>
+              </div>
+              <p class="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
+                Built a Python backend for structured generation with validation, retry logic, SQL-backed storage, caching, and safeguards—reducing malformed outputs by <strong class="font-semibold text-zinc-200">35%</strong> and improving retrieval latency by <strong class="font-semibold text-zinc-200">25%</strong>.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section id="research" class="border-y border-white/[0.055] bg-white/[0.012]">
+      <div class="mx-auto max-w-shell px-5 py-28 sm:px-7 sm:py-32 lg:px-8">
+        <div class="reveal max-w-3xl">
+          <p class="section-kicker">02 · Research</p>
+          <h2 class="mt-5 text-3xl font-bold tracking-[-.045em] text-white sm:text-5xl">
+            Generative models, verification, and reliable AI systems.
+          </h2>
+        </div>
+
+        <div class="mt-14 grid gap-5 lg:grid-cols-[.9fr_1.1fr]">
+          <!-- GEMLAB -->
+          <article class="reveal tilt hairline glass rounded-[28px] border border-white/[0.055] p-7 sm:p-8">
+            <div class="flex items-start justify-between gap-5">
+              <div>
+                <div class="flex items-center gap-2.5">
+                  <span class="vt-mark" aria-hidden="true">VT</span>
+                  <span class="font-mono text-[10px] uppercase tracking-[.15em] text-zinc-600">Current research</span>
+                </div>
+                <h3 class="mt-5 text-2xl font-bold tracking-[-.035em] text-white sm:text-3xl">GEMLAB</h3>
+              </div>
+              <span class="rounded-full border border-violet/15 bg-violet/[0.05] px-3 py-1.5 font-mono text-[10px] text-violet">Generative Modeling Lab</span>
+            </div>
+
+            <p class="mt-5 text-sm leading-7 text-zinc-400">
+              Undergraduate researcher at Virginia Tech’s Generative Modeling Lab, advised by <strong class="font-semibold text-zinc-200">Prof. Pınar Yanardağ</strong>, working in the lab’s core area of controllable image and video generation, personalization, and interpretable generative systems.
+            </p>
+
+            <div class="mt-7 rounded-2xl border border-white/[0.055] bg-black/15 p-5">
+              <p class="font-mono text-[10px] uppercase tracking-[.16em] text-zinc-600">Current focus</p>
+              <p class="mt-2.5 text-sm leading-6 text-zinc-300">
+                Generative video models · controllability · multimodal generation · model behavior
+              </p>
+            </div>
+
+            <a
+              href="https://gemlab-vt.github.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-7 inline-flex items-center gap-2 text-xs font-semibold text-zinc-400 transition hover:text-cyan"
+            >
+              Explore GEMLAB
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </article>
+
+          <!-- JudgeJack -->
+          <article class="reveal tilt publication-glow relative overflow-hidden rounded-[28px] border border-cyan/15 bg-gradient-to-br from-cyan/[0.065] via-white/[0.025] to-violet/[0.055] p-7 shadow-cyan sm:p-8">
+            <div class="relative z-10">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full border border-cyan/20 bg-cyan/[0.07] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[.13em] text-cyan">
+                  Accepted · Poster
+                </span>
+                <span class="rounded-full border border-white/10 bg-black/15 px-3 py-1.5 font-mono text-[10px] text-zinc-500">
+                  NeurIPS 2026 · Verify-Agents Workshop
+                </span>
+              </div>
+
+              <h3 class="mt-6 text-3xl font-extrabold tracking-[-.045em] text-white sm:text-4xl">JudgeJack</h3>
+              <p class="mt-2 font-mono text-[11px] leading-5 text-zinc-500">
+                Backdooring the Verifier to Hijack Test-Time Compute in Self-Correcting Reasoners
+              </p>
+
+              <p class="mt-6 max-w-3xl text-sm leading-7 text-zinc-300">
+                Built a matched-pair evaluation pipeline across <strong class="font-semibold text-white">21,000+ examples</strong> to isolate data-poisoning backdoors in verifier-guided LLM test-time compute, measuring trigger-specific behavior while controlling for clean-model effects.
+              </p>
+
+              <div class="mt-7 grid gap-3 sm:grid-cols-3">
+                <div class="rounded-2xl border border-white/[0.07] bg-black/20 p-4">
+                  <p class="metric-number text-2xl font-bold text-white">21K+</p>
+                  <p class="mt-1.5 text-[11px] leading-4 text-zinc-600">matched evaluation examples</p>
+                </div>
+                <div class="rounded-2xl border border-white/[0.07] bg-black/20 p-4">
+                  <p class="metric-number text-2xl font-bold text-white">10%</p>
+                  <p class="mt-1.5 text-[11px] leading-4 text-zinc-600">poisoning rate in core setup</p>
+                </div>
+                <div class="rounded-2xl border border-white/[0.07] bg-black/20 p-4">
+                  <p class="metric-number text-2xl font-bold text-white">+0.481</p>
+                  <p class="mt-1.5 text-[11px] leading-4 text-zinc-600">attributable triggered gap</p>
+                </div>
+              </div>
+
+              <a
+                href="https://openreview.net/forum?id=NPoh1LL6Xh"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-7 inline-flex items-center gap-2 text-xs font-semibold text-cyan transition hover:text-white"
+              >
+                Read on OpenReview
+                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Prior NLP research -->
+        <article class="reveal mt-5 hairline glass rounded-[26px] border border-white/[0.055] p-6 sm:p-8">
+          <div class="grid gap-7 lg:grid-cols-[.75fr_1.25fr] lg:gap-12">
+            <div>
+              <p class="font-mono text-[10px] uppercase tracking-[.16em] text-zinc-600">Aug 2025 — May 2026</p>
+              <h3 class="mt-3 text-xl font-bold tracking-[-.025em] text-white sm:text-2xl">NLP Undergraduate Researcher</h3>
+              <p class="mt-2 text-sm text-zinc-500">Virginia Tech College of Engineering</p>
+            </div>
+
+            <div>
+              <p class="text-sm leading-7 text-zinc-400">
+                Architected an end-to-end NLP analytics platform that converts large-scale open-ended survey data into interpretable themes and summaries using sentence embeddings, UMAP, HDBSCAN, and TF-IDF.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/10 px-3 py-1.5 font-mono text-[10px] text-zinc-500">RoBERTa embeddings</span>
+                <span class="rounded-full border border-white/10 px-3 py-1.5 font-mono text-[10px] text-zinc-500">UMAP</span>
+                <span class="rounded-full border border-white/10 px-3 py-1.5 font-mono text-[10px] text-zinc-500">HDBSCAN</span>
+                <span class="rounded-full border border-white/10 px-3 py-1.5 font-mono text-[10px] text-zinc-500">TF-IDF</span>
+                <span class="rounded-full border border-white/10 px-3 py-1.5 font-mono text-[10px] text-zinc-500">Python</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Stack marquee -->
+    <section class="overflow-hidden border-b border-white/[0.055] py-6">
+      <div class="marquee-mask">
+        <div class="marquee-track flex gap-3 pr-3">
+          <div class="flex gap-3">
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/python/ffffff" alt="" loading="lazy">Python</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/pytorch/ffffff" alt="" loading="lazy">PyTorch</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/fastapi/ffffff" alt="" loading="lazy">FastAPI</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/postgresql/ffffff" alt="" loading="lazy">PostgreSQL</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/redis/ffffff" alt="" loading="lazy">Redis</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/react/ffffff" alt="" loading="lazy">React Native</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/docker/ffffff" alt="" loading="lazy">Docker</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/microsoftazure/ffffff" alt="" loading="lazy">Azure</span>
+          </div>
+          <div class="flex gap-3" aria-hidden="true">
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/python/ffffff" alt="" loading="lazy">Python</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/pytorch/ffffff" alt="" loading="lazy">PyTorch</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/fastapi/ffffff" alt="" loading="lazy">FastAPI</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/postgresql/ffffff" alt="" loading="lazy">PostgreSQL</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/redis/ffffff" alt="" loading="lazy">Redis</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/react/ffffff" alt="" loading="lazy">React Native</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/docker/ffffff" alt="" loading="lazy">Docker</span>
+            <span class="stack-icon inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-2 font-mono text-[10px] text-zinc-500"><img src="https://cdn.simpleicons.org/microsoftazure/ffffff" alt="" loading="lazy">Azure</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="mx-auto max-w-shell px-5 py-28 sm:px-7 sm:py-32 lg:px-8">
+      <div class="reveal max-w-3xl">
+        <p class="section-kicker">03 · Projects</p>
+        <h2 class="mt-5 text-3xl font-bold tracking-[-.045em] text-white sm:text-5xl">Built from first principles.</h2>
+        <p class="mt-5 max-w-2xl text-sm leading-7 text-zinc-500 sm:text-base">
+          Systems work spanning model verification, structured LLM generation, and semantic representation learning.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <article class="reveal tilt hairline glass flex min-h-[370px] flex-col rounded-[26px] border border-white/[0.055] p-6">
+          <div class="flex items-center justify-between">
+            <span class="grid h-10 w-10 place-items-center rounded-xl border border-cyan/15 bg-cyan/[0.05] font-mono text-[11px] font-semibold text-cyan">TTC</span>
+            <span class="font-mono text-[10px] text-zinc-700">01</span>
+          </div>
+          <h3 class="mt-12 text-xl font-bold tracking-[-.025em] text-white">Test-Time Compute Verifier</h3>
+          <p class="mt-4 flex-1 text-sm leading-7 text-zinc-400">
+            Custom PyTorch module evaluating intermediate sequence pathways to verify logical consistency in autoregressive models.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-2">
+            <span class="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-zinc-500">Python</span>
+            <span class="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-zinc-500">PyTorch</span>
+            <span class="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-zinc-500">LLMs</span>
+          </div>
+        </article>
+
+        <article class="reveal tilt hairline glass flex min-h-[370px] flex-col rounded-[26px] border border-white/[0.055] p-6">
+          <div class="flex items-center justify-between">
+            <span class="grid h-10 w-10 place-items-center rounded-xl border border-violet/15 bg-violet/[0.05] font-mono text-[11px] font-semibold text-violet">MATH</span>
+            <span class="font-mono text-[10px] text-zinc-700">02</span>
+          </div>
+          <h3 class="mt-12 text-xl font-bold tracking-[-.025em] text-white">Math Generalization LLM Pipeline</h3>
+          <p class="mt-4 flex-1 text-sm leading-7 text-zinc-400">
+            Multi-stage extraction and generation system with validation, structured outputs, and hybrid duplicate detection for mathematical problem templates.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-2">
+            <span class="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-zinc-500">Python</span>
+            <span class="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-zinc-500">FastAPI</span>
+            <span class="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-zinc-500">SQL</span>
+          </div>
+        </article>
+
+        <article class="reveal tilt hairline glass flex min-h-[370px] flex-col rounded-[26px] border border-white/[0.055] p-6 md:col-span-2 lg:col-span-1">
+          <div class="flex items-center justify-between">
+            <span class="grid h-10 w-10 place-items-center rounded-xl border border-orange/15 bg-orange/[0.05] font-mono text-[11px] font-semibold text-orange">NLP</span>
+            <span class="font-mono text-[10px] text-zinc-700">03</span>
+          </div>
+          <h3 class="mt-12 text-xl font-bold tracking-[-.025em] text-white">Semantic Clustering Pipeline</h3>
+          <p class="mt-4 flex-1 text-sm leading-7 text-zinc-400">
+            End-to-end NLP system using semantic embeddings, UMAP, HDBSCAN, representative-sample retrieval, and TF-IDF to turn open-ended text into interpretable themes.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-2">
+            <span class="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-zinc-500">Embeddings</span>
+            <span class="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-zinc-500">UMAP</span>
+            <span class="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-zinc-500">HDBSCAN</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- About / leadership -->
+    <section id="about" class="border-y border-white/[0.055] bg-white/[0.012]">
+      <div class="mx-auto max-w-shell px-5 py-28 sm:px-7 sm:py-32 lg:px-8">
+        <div class="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
+          <div class="reveal">
+            <p class="section-kicker">04 · Beyond the code</p>
+            <h2 class="mt-5 text-3xl font-bold tracking-[-.045em] text-white sm:text-5xl">
+              Leadership under pressure.
+            </h2>
+            <p class="mt-5 max-w-xl text-sm leading-7 text-zinc-500 sm:text-base">
+              The same habits that shape reliable systems—discipline, feedback loops, and long-horizon execution—show up outside engineering too.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <article class="reveal tilt hairline glass rounded-[26px] border border-white/[0.055] p-6 sm:p-7">
+              <div class="flex gap-4">
+                <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan/15 bg-cyan/[0.05] font-mono text-[10px] font-semibold text-cyan">ACM</div>
+                <div>
+                  <p class="font-mono text-[10px] uppercase tracking-[.15em] text-zinc-600">President · 2024–2025</p>
+                  <h3 class="mt-2 text-lg font-bold text-white">Association for Computing Machinery</h3>
+                  <p class="mt-3 text-sm leading-6 text-zinc-400">
+                    Directed a team of 8 officers and 100+ members across technical workshops, hackathons, and speaker events. Later recognized as <strong class="font-semibold text-zinc-200">Outstanding President of a Student Organization</strong>, selected from 98 student leaders.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="reveal tilt hairline glass rounded-[26px] border border-white/[0.055] p-6 sm:p-7">
+              <div class="flex gap-4">
+                <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-orange/15 bg-orange/[0.05] text-lg">△</div>
+                <div>
+                  <p class="font-mono text-[10px] uppercase tracking-[.15em] text-zinc-600">Turkish Triathlon Federation</p>
+                  <h3 class="mt-2 text-lg font-bold text-white">Two-Time National Triathlon Champion</h3>
+                  <p class="mt-3 text-sm leading-6 text-zinc-400">
+                    Captained a team to a #1 national age-group ranking and earned an individual national championship victory—an endurance background built on consistent training, pressure tolerance, and execution.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="reveal tilt hairline glass rounded-[26px] border border-white/[0.055] p-6 sm:p-7">
+              <div class="flex gap-4">
+                <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-violet/15 bg-violet/[0.05] font-mono text-[10px] font-semibold text-violet">NSF</div>
+                <div>
+                  <p class="font-mono text-[10px] uppercase tracking-[.15em] text-zinc-600">Research · Wilbur Wright College</p>
+                  <h3 class="mt-2 text-lg font-bold text-white">NSF-Funded Research Assistant</h3>
+                  <p class="mt-3 text-sm leading-6 text-zinc-400">
+                    Contributed to NSF-sponsored research on mentor–mentee matching, analyzing data from 132 participants to help validate a data-driven matching algorithm.
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="mx-auto max-w-shell px-5 py-28 sm:px-7 sm:py-36 lg:px-8">
+      <div class="reveal relative overflow-hidden rounded-[32px] border border-white/[0.07] bg-gradient-to-br from-white/[0.055] via-white/[0.02] to-cyan/[0.035] p-8 sm:p-12">
+        <div class="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-violet/[0.07] blur-3xl"></div>
+        <div class="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div class="max-w-3xl">
+            <p class="section-kicker">05 · Connect</p>
+            <h2 class="mt-5 text-3xl font-bold tracking-[-.05em] text-white sm:text-5xl">
+              Interested in hard AI problems and systems that have to work.
+            </h2>
+            <p class="mt-5 max-w-2xl text-sm leading-7 text-zinc-500 sm:text-base">
+              Research collaborations, generative AI, ML systems, backend infrastructure, and technically ambitious product work.
+            </p>
+          </div>
+
+          <a
+            href="mailto:barbaroszorluchi@gmail.com"
+            class="group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3.5 text-sm font-semibold text-black transition hover:bg-cyan focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan/70"
+          >
+            barbaroszorluchi@gmail.com
+            <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/[0.055]">
+    <div class="mx-auto flex max-w-shell flex-col gap-6 px-5 py-9 sm:flex-row sm:items-center sm:justify-between sm:px-7 lg:px-8">
+      <div>
+        <p class="text-xs font-medium text-zinc-400">Barbaros Zorlu</p>
+        <p class="mt-1 font-mono text-[10px] text-zinc-700">AI/ML Researcher · Software Engineer · © <span id="year"></span></p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/barbarosz" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-zinc-500 transition hover:border-cyan/25 hover:text-white">
+          <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.596 2 12.267c0 4.537 2.865 8.386 6.839 9.745.5.095.682-.223.682-.494 0-.244-.009-.89-.014-1.746-2.782.621-3.369-1.375-3.369-1.375-.455-1.188-1.11-1.504-1.11-1.504-.908-.638.069-.625.069-.625 1.003.073 1.531 1.058 1.531 1.058.892 1.568 2.341 1.115 2.91.852.091-.664.349-1.115.635-1.371-2.221-.26-4.555-1.141-4.555-5.076 0-1.121.39-2.037 1.029-2.754-.103-.26-.446-1.304.098-2.718 0 0 .84-.276 2.75 1.052A9.326 9.326 0 0 1 12 6.966a9.32 9.32 0 0 1 2.504.346c1.909-1.328 2.748-1.052 2.748-1.052.546 1.414.203 2.458.1 2.718.64.717 1.027 1.633 1.027 2.754 0 3.945-2.338 4.813-4.566 5.068.359.317.679.944.679 1.903 0 1.374-.012 2.482-.012 2.82 0 .274.18.594.688.493C19.138 20.65 22 16.803 22 12.267 22 6.596 17.523 2 12 2Z" clip-rule="evenodd"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/barbaros-zorlu" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-zinc-500 transition hover:border-cyan/25 hover:text-white">
+          <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.96 1.96 0 1 0 5.25 6.92 1.96 1.96 0 0 0 5.25 3ZM20.44 13.4c0-3.46-1.85-5.07-4.32-5.07-1.99 0-2.88 1.09-3.38 1.86V8.5H9.36V20h3.38v-5.7c0-1.5.28-2.95 2.14-2.95 1.83 0 1.85 1.71 1.85 3.05V20h3.38l.33-6.6Z"/>
+          </svg>
+        </a>
+        <a href="mailto:barbaroszorluchi@gmail.com" aria-label="Email" class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-zinc-500 transition hover:border-cyan/25 hover:text-white">
+          <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M4 6.75h16v10.5H4z" stroke-linejoin="round"/>
+            <path d="m5 7.5 7 5.3 7-5.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Command palette -->
+  <div
+    id="command-palette"
+    aria-hidden="true"
+    class="fixed inset-0 z-[90] flex items-start justify-center bg-black/65 px-4 pt-[16vh] opacity-0 backdrop-blur-sm transition-opacity duration-200 pointer-events-none"
+  >
+    <div class="palette-card w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-[#101014] shadow-2xl">
+      <div class="flex items-center gap-3 border-b border-white/[0.06] px-4 py-3">
+        <svg class="h-4 w-4 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
+        </svg>
+        <input
+          id="command-input"
+          class="w-full bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-700"
+          placeholder="Jump to a section..."
+          autocomplete="off"
+        />
+        <span class="kbd rounded-md px-1.5 py-0.5 font-mono text-[9px] text-zinc-600">ESC</span>
+      </div>
+      <div id="command-list" class="p-2">
+        <button data-target="#work" class="command-item flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.045] hover:text-white">
+          <span>Selected work</span><span class="font-mono text-[10px] text-zinc-700">01</span>
+        </button>
+        <button data-target="#research" class="command-item flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.045] hover:text-white">
+          <span>Research & publications</span><span class="font-mono text-[10px] text-zinc-700">02</span>
+        </button>
+        <button data-target="#projects" class="command-item flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.045] hover:text-white">
+          <span>Projects</span><span class="font-mono text-[10px] text-zinc-700">03</span>
+        </button>
+        <button data-target="#about" class="command-item flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm text-zinc-400 transition hover:bg-white/[0.045] hover:text-white">
+          <span>About / leadership</span><span class="font-mono text-[10px] text-zinc-700">04</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
+    );
+
+    document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+    // Scroll progress
+    const progress = document.getElementById("scroll-progress");
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = maxScroll > 0 ? scrollTop / maxScroll : 0;
+      progress.style.transform = `scaleX(${ratio})`;
+    };
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+
+    // Active nav
+    const navLinks = [...document.querySelectorAll(".nav-link")];
+    const sections = ["work", "research", "projects", "about"]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((link) => {
+            link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
+          });
+        });
+      },
+      { rootMargin: "-38% 0px -52% 0px", threshold: 0 }
+    );
+    sections.forEach((section) => navObserver.observe(section));
+
+    // Ambient cursor light (desktop only)
+    const canHover = window.matchMedia("(hover: hover)").matches;
+    if (canHover) {
+      window.addEventListener("pointermove", (event) => {
+        document.documentElement.style.setProperty("--mx", `${event.clientX}px`);
+        document.documentElement.style.setProperty("--my", `${event.clientY}px`);
+      }, { passive: true });
+    }
+
+    // Command palette
+    const palette = document.getElementById("command-palette");
+    const input = document.getElementById("command-input");
+    const commandButton = document.getElementById("command-button");
+    const items = [...document.querySelectorAll(".command-item")];
+
+    const openPalette = () => {
+      palette.setAttribute("aria-hidden", "false");
+      setTimeout(() => input.focus(), 30);
+    };
+
+    const closePalette = () => {
+      palette.setAttribute("aria-hidden", "true");
+      input.value = "";
+      items.forEach((item) => item.classList.remove("hidden"));
+    };
+
+    commandButton?.addEventListener("click", openPalette);
+
+    document.addEventListener("keydown", (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        palette.getAttribute("aria-hidden") === "false" ? closePalette() : openPalette();
+      }
+      if (event.key === "Escape") closePalette();
+    });
+
+    palette.addEventListener("click", (event) => {
+      if (event.target === palette) closePalette();
+    });
+
+    items.forEach((item) => {
+      item.addEventListener("click", () => {
+        const target = document.querySelector(item.dataset.target);
+        closePalette();
+        target?.scrollIntoView({ behavior: "smooth" });
+      });
+    });
+
+    input.addEventListener("input", () => {
+      const q = input.value.toLowerCase().trim();
+      items.forEach((item) => {
+        item.classList.toggle("hidden", q && !item.textContent.toLowerCase().includes(q));
+      });
+    });
+  </script>
+</body>
+</html>
